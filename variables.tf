@@ -66,11 +66,6 @@ variable "service_vpc_cidr" {
   description = "CIDR Block for the Service VPC"
 }
 
-variable "eks_vpc_cidr" {
-  type = string
-  description = "CIDR Block for the Spoke VPC"
-}
-
 variable "aws_min_instances" {
   type = number
   description = "Minimum Number of Gateway Instances"
