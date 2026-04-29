@@ -53,7 +53,7 @@ resource "null_resource" "ngfws_onboarding_script" {
   }
 
   provisioner "local-exec" {
-    command     = "python3 sccfm.py --host ${self.triggers.host_ip} --username admin --password C1sco12345 --gen_command '${self.triggers.generated_command}'"
+    command     = "python3 sccfm.py --host ${self.triggers.host_ip} --username admin --password Cisco@123 --gen_command '${self.triggers.generated_command}'"
     working_dir = "${path.module}/scripts/device-onboarding"
   }
 }

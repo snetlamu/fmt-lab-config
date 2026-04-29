@@ -8,8 +8,8 @@ terraform {
 }
 
 resource "ciscomcd_gateway" "aws_hub_gw1" {
-  name                   = "${var.name}-ingress-gateway"
-  description            = "hmf-lab"
+  name                   = "${var.name}-egress-gateway"
+  description            = "fmt-lab"
   csp_account_name       = var.csp_account_name
   instance_type          = var.gw_instance_type
   gateway_image          = var.gw_image
