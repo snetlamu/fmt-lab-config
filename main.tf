@@ -35,6 +35,7 @@ module "mcd_egress_gw" {
   csp_account_name  = var.ciscomcd_account
   gw_image          = var.gw_image
   gw_instance_type  = var.gw_instance_type
+  name              = var.name
   max_instances     = 1
   min_instances     = 3
   service_vpc_id    = module.service_vpc.service_vpc_id

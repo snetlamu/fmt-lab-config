@@ -3,6 +3,10 @@ variable "csp_account_name" {
   description = "MCD Account Name"
 }
 
+variable "name" {
+  type = string
+}
+
 variable "service_vpc_id" {
   type = string
   description = "Service VPC ID"
