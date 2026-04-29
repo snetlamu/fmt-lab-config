@@ -34,7 +34,7 @@ provider "aws" {
 }
 
 provider "ciscomcd" {
-  api_key_file = file("hmf-lab.json")
+  api_key_file = file(var.api_key_filename)
 }
 
 provider "fmc" {

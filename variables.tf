@@ -1,3 +1,6 @@
+variable "api_key_filename" {
+  type = string
+}
 # AWS
 variable "aws_access_key" {
   type = string
