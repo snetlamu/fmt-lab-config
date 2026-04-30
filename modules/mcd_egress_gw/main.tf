@@ -25,13 +25,13 @@ resource "ciscomcd_gateway" "aws_hub_gw1" {
 }
 
 resource "ciscomcd_policy_rule_set" "hmf-outbound" {
-	name = "hmf-outbound"
+	name = "${var.name}_ingress_policy"
 }
 
 resource "ciscomcd_policy_rules" "hmf-outbound_rules" {
 	rule_set_id = ciscomcd_policy_rule_set.hmf-outbound.id
 	rule {
-		name = "hmf-outbound"
+		name = "outbound"
 		action = "Allow Log"
 		state = "ENABLED"
 		service = 2
