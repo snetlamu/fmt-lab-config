@@ -25,7 +25,7 @@ resource "ciscomcd_gateway" "aws_hub_gw1" {
 }
 
 resource "ciscomcd_policy_rule_set" "hmf-outbound" {
-	name = "${var.name}_ingress_policy"
+	name = "${var.name}_egress_policy"
 }
 
 resource "ciscomcd_policy_rules" "hmf-outbound_rules" {
