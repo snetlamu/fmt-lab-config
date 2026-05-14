@@ -2,7 +2,7 @@ terraform {
   required_providers {
     fmc = {
       source = "CiscoDevNet/fmc"
-      version = "2.0.0-rc7"
+      version = "2.3.0"
     }
     sccfm = {
       source = "CiscoDevNet/sccfm"
@@ -62,6 +62,41 @@ resource "sccfm_ftd_device_onboarding" "ngfws_onboarding" {
   count      = length(var.device_name)
   depends_on = [null_resource.ngfws_onboarding_script]
   ftd_uid    = sccfm_ftd_device.ngfws[count.index].id
+}
+
+resource "fmc_certificate_enrollment" "ravpn_cert" {
+  name                                                               = "RAVPN-Cert"
+  enrollment_type                                                    = "SELF_SIGNED_CERTFICATE"
+  certificate_common_name                                            = "ravpn.acme.com"
+}
+
+resource "fmc_certificate_enrollment" "sp_cert" {
+  name                                                               = "SP-Cert"
+  enrollment_type                                                    = "SELF_SIGNED_CERTFICATE"
+  certificate_common_name                                            = "sp.acme.com"
+}
+
+resource "fmc_security_zone" "ravpn" {
+  name           = "RAVPN"
+  interface_type = "ROUTED"
+}
+
+resource "fmc_certificate_enrollment" "ip_cert" {
+  depends_on = [ fmc_security_zone.ravpn ]
+  name                                                               = "IP-Cert-test"
+  enrollment_type                                                    = "ACME"
+  acme_authentication_interface_id                                   = fmc_security_zone.ravpn.id
+  acme_authentication_interface_name                                 = fmc_security_zone.ravpn.name
+  est_enrollment_url                                                 = "https://acme-v02.api.letsencrypt.org/directory"
+  acme_authentication_protocol                                       = "HTTP01"
+  key_type                                                           = "RSA"
+  key_size                                                           = "CertKey_2048"
+  validation_usage_ssl_client                                        = true
+}
+
+resource "fmc_secure_client_image" "sc_image" {
+  name        = "cisco-secure-client-win-5.1.14.145-webdeploy-k9.pkg"
+  path        = "/home/cisco/fmt-lab-config/modules/dcloud_ftd_onboarding/cisco-secure-client-win-5.1.14.145-webdeploy-k9.pkg"
 }
 
 # resource "time_sleep" "wait_for_hq_onboarding" {
